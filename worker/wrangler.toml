@@ -1,0 +1,11 @@
+name = "catalog-editor"
+main = "worker/index.js"
+compatibility_date = "2026-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "catalog"
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "images"
