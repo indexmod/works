@@ -23,45 +23,7 @@ function parseCSV(text) {
     });
 }
 
-// -------------------- IMAGE DROP --------------------
-
-function enableDrop(imgEl, item, key) {
-
-    imgEl.addEventListener("dragover", e => {
-        e.preventDefault();
-        imgEl.style.opacity = 0.6;
-    });
-
-    imgEl.addEventListener("dragleave", () => {
-        imgEl.style.opacity = 1;
-    });
-
-    imgEl.addEventListener("drop", e => {
-
-        e.preventDefault();
-        imgEl.style.opacity = 1;
-
-        const file = e.dataTransfer.files[0];
-        if (!file || !file.type.startsWith("image/")) return;
-
-        const reader = new FileReader();
-
-        reader.onload = ev => {
-
-            imgEl.src = ev.target.result;
-
-            // local save
-            localStorage.setItem(item.id + "_" + key, ev.target.result);
-
-            // mark dirty for future sync
-            console.log("UPDATED:", item.id, key);
-        };
-
-        reader.readAsDataURL(file);
-    });
-}
-
-// -------------------- TEXT EDIT --------------------
+// -------------------- TEXT EDIT ONLY --------------------
 
 function makeEditable(el, item, key) {
 
@@ -72,6 +34,34 @@ function makeEditable(el, item, key) {
 
     el.addEventListener("input", () => {
         localStorage.setItem(item.id + "_" + key, el.innerText);
+    });
+}
+
+// -------------------- DRAG & DROP ONLY --------------------
+
+function enableDrop(imgEl, item, key) {
+
+    imgEl.addEventListener("dragover", e => {
+        e.preventDefault();
+    });
+
+    imgEl.addEventListener("drop", e => {
+
+        e.preventDefault();
+
+        const file = e.dataTransfer.files[0];
+        if (!file || !file.type.startsWith("image/")) return;
+
+        const reader = new FileReader();
+
+        reader.onload = ev => {
+
+            imgEl.src = ev.target.result;
+
+            localStorage.setItem(item.id + "_" + key, ev.target.result);
+        };
+
+        reader.readAsDataURL(file);
     });
 }
 
@@ -110,37 +100,22 @@ async function load() {
 
         table.appendChild(tr);
 
-        // ---- hooks ----
+        // TEXT EDIT ONLY
+        makeEditable(tr.querySelector(".title"), item, "title");
+        makeEditable(tr.querySelector(".meta"), item, "meta");
+        makeEditable(tr.querySelector(".desc"), item, "desc");
 
-        const title = tr.querySelector(".title");
-        const meta = tr.querySelector(".meta");
-        const desc = tr.querySelector(".desc");
+        // DROP ONLY
+        enableDrop(tr.querySelector(".main-img"), item, "image");
+        enableDrop(tr.querySelector(".detail-img"), item, "detail_image");
 
-        makeEditable(title, item, "title");
-        makeEditable(desc, item, "desc");
-
-        const mainImg = tr.querySelector(".main-img");
-        const detailImg = tr.querySelector(".detail-img");
-
-        enableDrop(mainImg, item, "image");
-        enableDrop(detailImg, item, "detail_image");
-
-        // restore local images
+        // restore images
         const img1 = localStorage.getItem(item.id + "_image");
         const img2 = localStorage.getItem(item.id + "_detail_image");
 
-        if (img1) mainImg.src = img1;
-        if (img2) detailImg.src = img2;
+        if (img1) tr.querySelector(".main-img").src = img1;
+        if (img2) tr.querySelector(".detail-img").src = img2;
     });
-}
-
-function setMode(mode) {
-
-    if (mode === "print") {
-        document.body.classList.add("print-mode");
-    } else {
-        document.body.classList.remove("print-mode");
-    }
 }
 
 load();
