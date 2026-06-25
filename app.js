@@ -1,8 +1,10 @@
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQEUsZO7APvo_amXquaTettgvbk8RQ_Yq81diOF36jJvNBIzRjTC6r_quylZ54h6YFKs7qBiUJLvtd7/pub?output=csv";
 
+const SYNC_URL = "/api/sync"; // будущий worker
+
 console.log("APP START");
 
-// ---------------- CSV ----------------
+// ---------- CSV ----------
 
 function parseCSV(text) {
 
@@ -22,7 +24,38 @@ function parseCSV(text) {
     });
 }
 
-// ---------------- LOAD ----------------
+// ---------- SYNC QUEUE ----------
+
+const pendingSync = new Map();
+
+function scheduleSync(id, meta) {
+
+    pendingSync.set(id, meta);
+
+    // debounce batch sync
+    clearTimeout(window.__syncTimer);
+
+    window.__syncTimer = setTimeout(() => {
+
+        const payload = Array.from(pendingSync.entries()).map(([id, meta]) => ({
+            id,
+            meta
+        }));
+
+        pendingSync.clear();
+
+        fetch(SYNC_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        console.log("SYNC SENT:", payload);
+
+    }, 800);
+}
+
+// ---------- LOAD ----------
 
 async function load() {
 
@@ -40,43 +73,33 @@ async function load() {
 
         tr.innerHTML = `
             <td>
-                <img src="images/${item.image}" />
+                <img src="images/${item.image}">
             </td>
 
             <td>
-                <img src="images/${item.detail_image}" />
-
-                <div class="title editable" contenteditable="true">
-                    ${item.title || ""}
-                </div>
-
-                <div class="meta editable" contenteditable="true">
-                    ${item.meta || ""}
-                </div>
+                <div class="meta editable" contenteditable="true">${item.meta || ""}</div>
             </td>
         `;
 
+        const metaEl = tr.querySelector(".meta");
+
+        // restore local cache first (instant UX)
+        const saved = localStorage.getItem(item.id + "_meta");
+        if (saved) metaEl.innerText = saved;
+
+        // edit handler
+        metaEl.addEventListener("input", () => {
+
+            const value = metaEl.innerText;
+
+            // local cache
+            localStorage.setItem(item.id + "_meta", value);
+
+            // server sync
+            scheduleSync(item.id, value);
+        });
+
         table.appendChild(tr);
-
-        // local edit persistence
-        const title = tr.querySelector(".title");
-        const meta = tr.querySelector(".meta");
-
-        const key = item.id;
-
-        const savedTitle = localStorage.getItem(key + "_title");
-        const savedMeta = localStorage.getItem(key + "_meta");
-
-        if (savedTitle) title.innerText = savedTitle;
-        if (savedMeta) meta.innerText = savedMeta;
-
-        title.addEventListener("input", () => {
-            localStorage.setItem(key + "_title", title.innerText);
-        });
-
-        meta.addEventListener("input", () => {
-            localStorage.setItem(key + "_meta", meta.innerText);
-        });
     });
 }
 

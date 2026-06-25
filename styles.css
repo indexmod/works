@@ -21,7 +21,7 @@ body {
     border: none;
 }
 
-/* 2 COLUMNS ONLY */
+/* 2 COLUMNS */
 
 .catalog td:nth-child(1) {
     width: 50%;
@@ -31,27 +31,21 @@ body {
     width: 50%;
 }
 
-/* TEXT */
-
-.title,
-.meta {
-    font-size: 25px;
-    line-height: 1.2;
-    margin: 0;
-    font-weight: 400;
-}
-
-.title {
-    margin-bottom: 10px;
-}
-
-/* IMAGES */
+/* IMAGE */
 
 img {
     width: 100%;
     height: 100%;
     object-fit: contain;
     display: block;
+}
+
+/* TEXT */
+
+.meta {
+    font: inherit;
+    margin: 0;
+    white-space: pre-wrap;
 }
 
 /* EDITABLE */
