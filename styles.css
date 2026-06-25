@@ -1,60 +1,71 @@
 body {
   margin: 0;
-  padding: 20mm;
+  padding: 18mm;
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 400;
   color: #000;
   background: #fff;
 }
 
-/* общий список */
+/* список */
 .list {
   display: flex;
   flex-direction: column;
-  gap: 24mm;
+  gap: 22mm;
 }
 
-/* строка работы */
+/* строка объекта */
 .item {
   display: flex;
-  gap: 12mm;
+  gap: 14mm;
   align-items: flex-end;
   page-break-inside: avoid;
 }
 
-/* ТЕКСТ 1/6 */
+/* ТЕКСТ — строгая колонка */
 .text {
   flex: 1;
-  max-width: 16.66%;
+  max-width: 30%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
 
-/* ФОТО 5/6 */
+/* ФОТО — доминирует */
 .image {
-  flex: 5;
+  flex: 2.2;
+  max-width: 70%;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
 }
 
+/* изображение НЕ растягиваем агрессивно */
 .image img {
   width: 100%;
+  max-width: 100%;
   height: auto;
   display: block;
 }
 
-/* текст как экспликация */
+/* типографика как музейный инвентарь */
 .title {
-  font-size: 26px;
-  font-weight: 700;
-  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: 0.2px;
 }
 
 .meta {
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1.2;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.35;
+  opacity: 0.9;
+}
+
+/* лёгкая визуальная дисциплина */
+.item + .item {
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding-top: 18mm;
 }
