@@ -1,58 +1,95 @@
 export default {
-  async fetch() {
+  async fetch(request) {
+    const url = new URL(request.url);
 
-    const API =
-      "https://api.github.com/repos/indexmod/works/contents/works";
-
-    const res = await fetch(API, {
-      headers: {
-        "Accept": "application/vnd.github+json",
-        "User-Agent": "indexmod"
-      }
-    });
-
-    const files = await res.json();
-
-    const mdFiles = files.filter(f => f.name.endsWith(".md"));
-
-    const works = [];
-
-    for (const file of mdFiles) {
-
-      const md = await fetch(file.download_url).then(r => r.text());
-
-      const meta = parse(md);
-
-      works.push(meta);
+    if (url.pathname === "/api/works") {
+      return Response.json([
+        {
+          title: "Хор 002",
+          year: 2026,
+          size: "120 × 60 см",
+          materials: "Фанера, эмаль",
+          image: "images/hor-002.jpg"
+        },
+        {
+          title: "Фас 001",
+          year: 2026,
+          size: "69 × 73 см",
+          materials: "Холст",
+          image: "images/fas-001.jpg"
+        }
+      ]);
     }
 
-    return new Response(JSON.stringify(works), {
-      headers: {
-        "content-type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-      }
+    return new Response(indexHTML(), {
+      headers: { "content-type": "text/html; charset=utf-8" }
     });
   }
 };
 
-function parse(md) {
+function indexHTML() {
+  return `<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Works</title>
 
-  const meta = {};
-  const match = md.match(/---([\s\S]*?)---([\s\S]*)/);
+<style>
+body {
+  margin:0;
+  padding:20mm;
+  font-family: Helvetica;
+  background:#fff;
+  color:#000;
+}
 
-  if (match) {
+.list { display:flex; flex-direction:column; gap:18mm; }
 
-    match[1].split("\n").forEach(line => {
+.item {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:12mm;
+}
 
-      const i = line.indexOf(":");
-      if (i === -1) return;
+.text { flex:1; }
 
-      const k = line.slice(0, i).trim();
-      const v = line.slice(i + 1).trim();
+.image { width:80mm; }
 
-      meta[k] = v;
-    });
-  }
+.image img { width:100%; height:auto; display:block; }
 
-  return meta;
+.title { font-size:20px; margin-bottom:6px; }
+.meta { font-size:14px; margin-bottom:4px; }
+</style>
+</head>
+
+<body>
+<div class="list" id="list"></div>
+
+<script>
+async function load() {
+  const res = await fetch('/api/works');
+  const data = await res.json();
+
+  document.getElementById('list').innerHTML =
+    data.map(i => \`
+      <div class="item">
+        <div class="text">
+          <div class="title">\${i.title}</div>
+          <div class="meta">\${i.year} · \${i.size}</div>
+          <div class="meta">\${i.materials}</div>
+        </div>
+
+        <div class="image">
+          <img src="\${i.image}">
+        </div>
+      </div>
+    \`).join('');
+}
+
+load();
+</script>
+
+</body>
+</html>`;
 }
