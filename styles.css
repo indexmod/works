@@ -1,20 +1,39 @@
+body {
+  margin: 0;
+  padding: 18mm;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000;
+  background: #fff;
+}
+
+/* список */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 30mm;
+}
+
+/* одна строка объекта */
 .item {
   display: flex;
   gap: 14mm;
+
   height: 85mm;
   overflow: hidden;
+
   page-break-inside: avoid;
-  align-items: stretch; /* важно: обе колонки одной высоты */
+  align-items: stretch; /* ключ: синхронизация высоты колонок */
 }
 
 /* ТЕКСТ */
 .text {
   width: 30%;
   position: relative;
-  display: flex;
 }
 
-/* фиксируем текст к нижней линии */
+/* текст фиксируется к нижней линии строки */
 .text-inner {
   position: absolute;
   bottom: 2mm;
@@ -22,19 +41,38 @@
   right: 0;
 }
 
-/* ИЗОБРАЖЕНИЕ */
+/* ФОТО */
 .image {
   width: 70%;
   position: relative;
   overflow: hidden;
 }
 
-/* фиксированная “рамка” картинки */
+/* изображение фиксируется по нижнему краю */
 .image img {
   position: absolute;
-  bottom: 0;   /* ключевое — нижний край общий */
+  bottom: 0;
   left: 0;
-  height: 85mm;  /* строго как строка */
+
+  height: 85mm; /* строго как строка */
   width: auto;
+
   display: block;
+  object-fit: contain;
+}
+
+/* заголовок */
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: 0.2px;
+}
+
+/* метаданные */
+.meta {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.35;
+  opacity: 0.9;
 }
