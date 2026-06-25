@@ -1,10 +1,77 @@
 ---
 ---
 
-{% assign works = site.pages | where_exp: "p", "p.path contains 'works/'" %}
+{% assign works_list = site.pages | where_exp: "p", "p.path contains 'works/'" %}
 
-Найдено: {{ works.size }}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Works</title>
 
-{% for work in works %}
-  {{ work.title }}<br>
+<style>
+
+body{
+    margin:0;
+    padding:20mm;
+    font-family:Helvetica,Arial,sans-serif;
+    color:#000;
+    background:#fff;
+}
+
+.item{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:12mm;
+    margin-bottom:18mm;
+}
+
+.text{
+    flex:1;
+}
+
+.image{
+    width:80mm;
+    flex-shrink:0;
+}
+
+.image img{
+    width:100%;
+    display:block;
+}
+
+.title{
+    font-size:20px;
+    margin-bottom:4px;
+}
+
+.meta{
+    font-size:16px;
+}
+
+</style>
+</head>
+<body>
+
+{% for work in works_list %}
+
+<div class="item">
+
+    <div class="text">
+        <div class="title">{{ work.title }}</div>
+        <div class="meta">{{ work.year }}</div>
+        <div class="meta">{{ work.size }}</div>
+        <div class="meta">{{ work.materials }}</div>
+    </div>
+
+    <div class="image">
+        <img src="images/{{ work.image }}">
+    </div>
+
+</div>
+
 {% endfor %}
+
+</body>
+</html>
