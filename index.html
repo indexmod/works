@@ -1,6 +1,72 @@
 ---
 ---
 
-# Works CMS is running
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>{{ site.title }}</title>
 
-Если ты видишь это — Jekyll работает.
+<style>
+body{
+    margin:40px;
+    font-family:Helvetica,Arial,sans-serif;
+}
+
+.item{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:40px;
+    margin-bottom:60px;
+}
+
+.text{
+    flex:1;
+}
+
+.image{
+    width:300px;
+}
+
+.image img{
+    width:100%;
+    height:auto;
+    display:block;
+}
+
+.title{
+    font-size:24px;
+}
+
+.meta{
+    margin-top:6px;
+}
+</style>
+
+</head>
+<body>
+
+<p>Работ найдено: {{ site.works.size }}</p>
+
+{% for work in site.works %}
+
+<div class="item">
+
+    <div class="text">
+        <div class="title">{{ work.title }}</div>
+        <div class="meta">{{ work.year }}</div>
+        <div class="meta">{{ work.size }}</div>
+        <div class="meta">{{ work.materials }}</div>
+    </div>
+
+    <div class="image">
+        <img src="images/{{ work.image }}">
+    </div>
+
+</div>
+
+{% endfor %}
+
+</body>
+</html>
