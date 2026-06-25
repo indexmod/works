@@ -1,5 +1,11 @@
-title: Works
-
 collections:
   works:
     output: true
+    permalink: /:collection/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: works
+    values:
+      layout: none
