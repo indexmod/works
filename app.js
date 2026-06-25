@@ -1,43 +1,51 @@
-const DATA = [
-{
-    title: "Хор 002",
-    year: 2026,
-    size: "120 × 60 см",
-    materials: "Фанера, белая эмаль, чёрный маркер",
-    image: "images/hor-002.jpg",
-    desc: "Композиция построена в виде сетки 8 × 4."
-},
-{
-    title: "Хор 003",
-    year: 2026,
-    size: "120 × 60 см",
-    materials: "Фанера, белая эмаль, чёрный маркер",
-    image: "images/hor-003.jpg",
-    desc: "Многосоставная композиция из большого количества лиц."
-}
-];
+const API = "https://your-worker.workers.dev?view=grid";
 
-function render() {
+async function load() {
 
-    const root = document.getElementById("list");
+  const res = await fetch(API);
+  const data = await res.json();
 
-    root.innerHTML = DATA.map(item => `
-        <div class="item">
+  const root = document.getElementById("list");
 
-            <div class="text">
-                <div class="title">${item.title}</div>
-                <div class="meta">${item.year} · ${item.size}</div>
-                <div class="meta">${item.materials}</div>
-                <div class="desc">${item.desc}</div>
-            </div>
-
-            <div class="image">
-                <img src="${item.image}">
-            </div>
-
-        </div>
-    `).join("");
-
+  if (data.view === "grid") renderGrid(data.works);
+  if (data.view === "list") renderList(data.works);
+  if (data.view === "print") renderPrint(data.works);
 }
 
-render();
+function renderGrid(works) {
+
+  document.body.className = "grid";
+
+  list.innerHTML = works.map(w => `
+    <div class="item">
+      <img src="images/${w.image}">
+      <div class="title">${w.title}</div>
+    </div>
+  `).join("");
+}
+
+function renderList(works) {
+
+  document.body.className = "list";
+
+  list.innerHTML = works.map(w => `
+    <div class="row">
+      <div>${w.title}</div>
+      <div>${w.year}</div>
+    </div>
+  `).join("");
+}
+
+function renderPrint(works) {
+
+  document.body.className = "print";
+
+  list.innerHTML = works.map(w => `
+    <div class="print-item">
+      <img src="images/${w.image}">
+      <div>${w.title} · ${w.year}</div>
+    </div>
+  `).join("");
+}
+
+load();
