@@ -1,43 +1,21 @@
+---
+layout: none
+---
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="utf-8">
 <title>Works</title>
-
-<style>
-body {
-  margin: 0;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 20px;
-  color: #000;
-}
-
-.item {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding: 20px;
-  border-bottom: 1px solid #000;
-}
-
-.text {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-
-img {
-  width: 200px;
-  object-fit: contain;
-}
-</style>
 </head>
 
 <body>
 
-<div id="list"></div>
-
-<script src="app.js"></script>
+{% for work in site.works %}
+  <div>
+    <a href="{{ work.url }}">{{ work.title }}</a>
+  </div>
+{% endfor %}
 
 </body>
 </html>

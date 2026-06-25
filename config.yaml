@@ -1,0 +1,6 @@
+title: Works
+markdown: kramdown
+
+collections:
+  works:
+    output: false
