@@ -1,51 +1,46 @@
-const API = "https://your-worker.workers.dev?view=grid";
+const API = "/works.json"; // или Cloudflare Worker URL
+
+console.log("APP START");
 
 async function load() {
 
-  const res = await fetch(API);
-  const data = await res.json();
+    const res = await fetch(API);
+    const data = await res.json();
 
-  const root = document.getElementById("list");
+    console.log("DATA:", data);
 
-  if (data.view === "grid") renderGrid(data.works);
-  if (data.view === "list") renderList(data.works);
-  if (data.view === "print") renderPrint(data.works);
-}
+    const root = document.getElementById("list");
 
-function renderGrid(works) {
+    root.innerHTML = data.map(item => `
 
-  document.body.className = "grid";
+        <div class="item">
 
-  list.innerHTML = works.map(w => `
-    <div class="item">
-      <img src="images/${w.image}">
-      <div class="title">${w.title}</div>
-    </div>
-  `).join("");
-}
+            <div class="text">
 
-function renderList(works) {
+                <div class="title">${item.title || ""}</div>
 
-  document.body.className = "list";
+                <div class="meta">
+                    ${item.year || ""} · ${item.size || ""}
+                </div>
 
-  list.innerHTML = works.map(w => `
-    <div class="row">
-      <div>${w.title}</div>
-      <div>${w.year}</div>
-    </div>
-  `).join("");
-}
+                <div class="meta">
+                    ${item.materials || ""}
+                </div>
 
-function renderPrint(works) {
+                <div class="desc">
+                    ${item.desc || ""}
+                </div>
 
-  document.body.className = "print";
+            </div>
 
-  list.innerHTML = works.map(w => `
-    <div class="print-item">
-      <img src="images/${w.image}">
-      <div>${w.title} · ${w.year}</div>
-    </div>
-  `).join("");
+            <div class="image">
+                <img src="images/${item.image}.jpg" alt="">
+            </div>
+
+        </div>
+
+    `).join("");
+
 }
 
 load();
