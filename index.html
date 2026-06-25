@@ -6,80 +6,36 @@
 
 <style>
 body {
-    margin: 0;
-    padding: 20mm;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    color: #000;
-    background: #fff;
+  margin: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  color: #000;
 }
 
-/* общий список */
-.list {
-    display: flex;
-    flex-direction: column;
-    gap: 18mm;
-}
-
-/* один блок работы */
 .item {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end; /* ключ: всё по нижнему краю */
-    gap: 12mm;
-    page-break-inside: avoid;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 20px;
+  border-bottom: 1px solid #000;
 }
 
-/* левая колонка */
 .text {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
-/* правая колонка (картинка) */
-.image {
-    width: 80mm;
-    flex-shrink: 0;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-}
-
-.image img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* текст */
-.title {
-    font-size: 20px;
-    margin-bottom: 6px;
-}
-
-.meta {
-    font-size: 16px;
-    margin-bottom: 6px;
-}
-
-.desc {
-    font-size: 16px;
-}
-
-/* печать */
-@media print {
-    body {
-        padding: 0;
-    }
+img {
+  width: 200px;
+  object-fit: contain;
 }
 </style>
 </head>
 
 <body>
 
-<div class="list" id="list"></div>
+<div id="list"></div>
 
 <script src="app.js"></script>
 

@@ -1,60 +1,32 @@
 const API = "https://works.wiki-self.workers.dev";
 
-console.log("APP START");
+console.log("START");
 
 async function load() {
 
-    try {
+  const res = await fetch(API);
+  const data = await res.json();
 
-        const res = await fetch(API);
+  const root = document.getElementById("list");
 
-        const text = await res.text();
-        console.log("RAW:", text.slice(0, 200));
+  root.innerHTML = data.map(w => `
 
-        const data = JSON.parse(text);
+    <div class="item">
 
-        console.log("DATA:", data);
+      <div class="text">
+        <div>${w.title || ""}</div>
+        <div>${w.year || ""}</div>
+        <div>${w.size || ""}</div>
+        <div>${w.materials || ""}</div>
+        <div>${w.desc || ""}</div>
+      </div>
 
-        const root = document.getElementById("list");
+      <img src="images/${w.image || ""}.jpg">
 
-        if (!root) {
-            console.error("NO #list FOUND");
-            return;
-        }
+    </div>
 
-        root.innerHTML = data.map(item => `
+  `).join("");
 
-            <div class="item">
-
-                <div class="text">
-
-                    <div class="title">${item.title || ""}</div>
-
-                    <div class="meta">
-                        ${item.year || ""} · ${item.size || ""}
-                    </div>
-
-                    <div class="meta">
-                        ${item.materials || ""}
-                    </div>
-
-                    <div class="desc">
-                        ${item.desc || ""}
-                    </div>
-
-                </div>
-
-                <div class="image">
-                    <img src="images/${item.image}.jpg" alt="">
-                </div>
-
-            </div>
-
-        `).join("");
-
-    } catch (e) {
-        console.error("LOAD ERROR:", e);
-    }
 }
 
 load();
