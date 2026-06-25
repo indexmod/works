@@ -2,4 +2,4 @@ title: Works
 
 collections:
   works:
-    output: false
+    output: true
