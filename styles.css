@@ -86,3 +86,45 @@ img:active {
 .catalog td:nth-child(3) {
     width: 60%;
 }
+
+@media print {
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .toolbar {
+        display: none;
+    }
+
+    .catalog td {
+        border: 1px solid #000;
+        height: 85mm;
+        padding: 10mm;
+    }
+
+    img {
+        max-height: 100%;
+    }
+
+}
+
+/* ---------- A3 MODE (screen preview) ---------- */
+
+body.print-mode {
+    background: #eee;
+}
+
+body.print-mode .catalog {
+    width: 297mm;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+}
+
+body.print-mode .catalog td {
+    border: 1px solid #ccc;
+    height: 90mm;
+    padding: 8mm;
+}

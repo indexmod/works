@@ -134,4 +134,13 @@ async function load() {
     });
 }
 
+function setMode(mode) {
+
+    if (mode === "print") {
+        document.body.classList.add("print-mode");
+    } else {
+        document.body.classList.remove("print-mode");
+    }
+}
+
 load();
