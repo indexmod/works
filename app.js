@@ -2,7 +2,7 @@ const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQEUsZO7APvo_
 
 console.log("APP START");
 
-// -------------------- CSV --------------------
+// ---------------- CSV ----------------
 
 function parseCSV(text) {
 
@@ -12,7 +12,6 @@ function parseCSV(text) {
     return lines.slice(1).map(line => {
 
         const cols = line.split(",");
-
         const obj = {};
 
         headers.forEach((h, i) => {
@@ -23,49 +22,7 @@ function parseCSV(text) {
     });
 }
 
-// -------------------- TEXT EDIT ONLY --------------------
-
-function makeEditable(el, item, key) {
-
-    el.contentEditable = true;
-
-    const saved = localStorage.getItem(item.id + "_" + key);
-    if (saved) el.innerText = saved;
-
-    el.addEventListener("input", () => {
-        localStorage.setItem(item.id + "_" + key, el.innerText);
-    });
-}
-
-// -------------------- DRAG & DROP ONLY --------------------
-
-function enableDrop(imgEl, item, key) {
-
-    imgEl.addEventListener("dragover", e => {
-        e.preventDefault();
-    });
-
-    imgEl.addEventListener("drop", e => {
-
-        e.preventDefault();
-
-        const file = e.dataTransfer.files[0];
-        if (!file || !file.type.startsWith("image/")) return;
-
-        const reader = new FileReader();
-
-        reader.onload = ev => {
-
-            imgEl.src = ev.target.result;
-
-            localStorage.setItem(item.id + "_" + key, ev.target.result);
-        };
-
-        reader.readAsDataURL(file);
-    });
-}
-
-// -------------------- LOAD --------------------
+// ---------------- LOAD ----------------
 
 async function load() {
 
@@ -83,38 +40,43 @@ async function load() {
 
         tr.innerHTML = `
             <td>
-                <img class="main-img" src="images/${item.image}">
+                <img src="images/${item.image}" />
             </td>
 
             <td>
-                <img class="detail-img" src="images/${item.detail_image}">
-            </td>
+                <img src="images/${item.detail_image}" />
 
-            <td>
-                <div class="title">${item.title || ""}</div>
-                <div class="meta">${item.year || ""} · ${item.size || ""}</div>
-                <div class="meta">${item.materials || ""}</div>
-                <div class="desc">${item.description || ""}</div>
+                <div class="title editable" contenteditable="true">
+                    ${item.title || ""}
+                </div>
+
+                <div class="meta editable" contenteditable="true">
+                    ${item.meta || ""}
+                </div>
             </td>
         `;
 
         table.appendChild(tr);
 
-        // TEXT EDIT ONLY
-        makeEditable(tr.querySelector(".title"), item, "title");
-        makeEditable(tr.querySelector(".meta"), item, "meta");
-        makeEditable(tr.querySelector(".desc"), item, "desc");
+        // local edit persistence
+        const title = tr.querySelector(".title");
+        const meta = tr.querySelector(".meta");
 
-        // DROP ONLY
-        enableDrop(tr.querySelector(".main-img"), item, "image");
-        enableDrop(tr.querySelector(".detail-img"), item, "detail_image");
+        const key = item.id;
 
-        // restore images
-        const img1 = localStorage.getItem(item.id + "_image");
-        const img2 = localStorage.getItem(item.id + "_detail_image");
+        const savedTitle = localStorage.getItem(key + "_title");
+        const savedMeta = localStorage.getItem(key + "_meta");
 
-        if (img1) tr.querySelector(".main-img").src = img1;
-        if (img2) tr.querySelector(".detail-img").src = img2;
+        if (savedTitle) title.innerText = savedTitle;
+        if (savedMeta) meta.innerText = savedMeta;
+
+        title.addEventListener("input", () => {
+            localStorage.setItem(key + "_title", title.innerText);
+        });
+
+        meta.addEventListener("input", () => {
+            localStorage.setItem(key + "_meta", meta.innerText);
+        });
     });
 }
 

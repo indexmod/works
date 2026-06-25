@@ -6,7 +6,7 @@ body {
     background: #fff;
 }
 
-/* ---------- TABLE ---------- */
+/* TABLE */
 
 .catalog {
     width: 100%;
@@ -18,48 +18,34 @@ body {
     padding: 20px;
     height: 260px;
     vertical-align: bottom;
-    border: none; /* ← УБРАЛИ РАМКИ */
+    border: none;
 }
 
-/* ---------- COLUMN LAYOUT ---------- */
+/* 2 COLUMNS ONLY */
 
 .catalog td:nth-child(1) {
-    width: 28%;
+    width: 50%;
 }
 
 .catalog td:nth-child(2) {
-    width: 12%;
+    width: 50%;
 }
 
-.catalog td:nth-child(3) {
-    width: 60%;
-}
-
-/* ---------- TEXT ---------- */
+/* TEXT */
 
 .title,
-.meta,
-.desc {
+.meta {
     font-size: 25px;
     line-height: 1.2;
-    font-weight: 400;
     margin: 0;
+    font-weight: 400;
 }
 
-/* лёгкая структура без иерархии */
 .title {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
-.meta {
-    margin-bottom: 8px;
-}
-
-.desc {
-    margin-bottom: 0;
-}
-
-/* ---------- IMAGES ---------- */
+/* IMAGES */
 
 img {
     width: 100%;
@@ -68,35 +54,8 @@ img {
     display: block;
 }
 
-/* ---------- EDITABLE ---------- */
+/* EDITABLE */
 
 .editable {
     outline: none;
-}
-
-/* ---------- PRINT ---------- */
-
-@media print {
-
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: Helvetica, Arial, sans-serif;
-        font-size: 25px;
-    }
-
-    .toolbar {
-        display: none;
-    }
-
-    .catalog td {
-        border: none;          /* важно */
-        height: 85mm;
-        padding: 10mm;
-        vertical-align: bottom;
-    }
-
-    img {
-        max-height: 100%;
-    }
 }
