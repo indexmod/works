@@ -15,41 +15,45 @@ body {
   gap: 22mm;
 }
 
-/* строка объекта */
+/* одна строка объекта */
 .item {
   display: flex;
   gap: 14mm;
-  align-items: flex-end;
+
+  /* фиксируем “музейную строку” */
+  height: 85mm;
+  overflow: hidden;
+
   page-break-inside: avoid;
 }
 
-/* ТЕКСТ — строгая колонка */
+/* ТЕКСТ (экспликация слева) */
 .text {
-  flex: 1;
-  max-width: 30%;
+  width: 30%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  padding-bottom: 2mm;
 }
 
-/* ФОТО — доминирует */
+/* ФОТО (объект справа) */
 .image {
-  flex: 2.2;
-  max-width: 70%;
+  width: 70%;
+  height: 100%;
   display: flex;
-  justify-content: flex-end;
   align-items: flex-end;
+  justify-content: flex-end;
 }
 
-/* изображение НЕ растягиваем агрессивно */
+/* изображение строго внутри поля */
 .image img {
   width: 100%;
-  max-width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
   display: block;
 }
 
-/* типографика как музейный инвентарь */
+/* заголовок */
 .title {
   font-size: 18px;
   font-weight: 600;
@@ -57,15 +61,10 @@ body {
   letter-spacing: 0.2px;
 }
 
+/* метаданные как музейная карточка */
 .meta {
   font-size: 14px;
   font-weight: 400;
   line-height: 1.35;
   opacity: 0.9;
-}
-
-/* лёгкая визуальная дисциплина */
-.item + .item {
-  border-top: 1px solid rgba(0,0,0,0.08);
-  padding-top: 18mm;
 }
