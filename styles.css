@@ -1,53 +1,44 @@
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #fff;
-}
-
-.toolbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 10px 16px;
-    border-bottom: 1px solid #ddd;
-    background: #fff;
-    font-size: 14px;
-    z-index: 10;
-}
-
-.catalog {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 60px;
-    table-layout: fixed;
-}
-
 .catalog td {
     border: 1px solid #ddd;
-    padding: 12px;
+    padding: 16px;
     vertical-align: bottom;
-    height: 200px;
+    height: 220px;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.meta {
+    font-size: 14px;
+    margin-bottom: 6px;
+    opacity: 0.85;
+}
+
+.desc {
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 img {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    transition: transform 0.2s ease;
 }
 
-.title {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 6px;
+img:hover {
+    transform: scale(1.03);
 }
 
-.meta {
-    font-size: 13px;
-    margin-bottom: 4px;
+.editable {
+    outline: none;
+    padding: 2px 4px;
+    border-radius: 4px;
 }
 
-.desc {
-    font-size: 13px;
-    line-height: 1.4;
+.editable:focus {
+    background: rgba(0,0,0,0.04);
 }
