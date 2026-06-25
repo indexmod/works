@@ -6,6 +6,8 @@ body {
     background: #fff;
 }
 
+/* ---------- TABLE ---------- */
+
 .catalog {
     width: 100%;
     border-collapse: collapse;
@@ -13,10 +15,24 @@ body {
 }
 
 .catalog td {
-    border: 1px solid #000;
     padding: 20px;
-    vertical-align: bottom;
     height: 260px;
+    vertical-align: bottom;
+    border: none; /* ← УБРАЛИ РАМКИ */
+}
+
+/* ---------- COLUMN LAYOUT ---------- */
+
+.catalog td:nth-child(1) {
+    width: 28%;
+}
+
+.catalog td:nth-child(2) {
+    width: 12%;
+}
+
+.catalog td:nth-child(3) {
+    width: 60%;
 }
 
 /* ---------- TEXT ---------- */
@@ -30,9 +46,8 @@ body {
     margin: 0;
 }
 
-/* убираем визуальную иерархию — всё одинаковое */
+/* лёгкая структура без иерархии */
 .title {
-    font-weight: 400;
     margin-bottom: 8px;
 }
 
@@ -50,37 +65,13 @@ img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    cursor: default;
-}
-
-/* ---------- LAYOUT ---------- */
-
-.catalog td:nth-child(1) {
-    width: 28%;
-}
-
-.catalog td:nth-child(2) {
-    width: 12%;
-}
-
-.catalog td:nth-child(3) {
-    width: 60%;
-}
-
-/* ---------- ALIGNMENT ---------- */
-
-.catalog td {
-    vertical-align: bottom;
+    display: block;
 }
 
 /* ---------- EDITABLE ---------- */
 
 .editable {
     outline: none;
-}
-
-.editable:focus {
-    background: none;
 }
 
 /* ---------- PRINT ---------- */
@@ -99,7 +90,7 @@ img {
     }
 
     .catalog td {
-        border: 1px solid #000;
+        border: none;          /* важно */
         height: 85mm;
         padding: 10mm;
         vertical-align: bottom;
