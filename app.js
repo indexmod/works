@@ -1,106 +1,43 @@
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQEUsZO7APvo_amXquaTettgvbk8RQ_Yq81diOF36jJvNBIzRjTC6r_quylZ54h6YFKs7qBiUJLvtd7/pub?output=csv";
+const DATA = [
+{
+    title: "Хор 002",
+    year: 2026,
+    size: "120 × 60 см",
+    materials: "Фанера, белая эмаль, чёрный маркер",
+    image: "images/hor-002.jpg",
+    desc: "Композиция построена в виде сетки 8 × 4."
+},
+{
+    title: "Хор 003",
+    year: 2026,
+    size: "120 × 60 см",
+    materials: "Фанера, белая эмаль, чёрный маркер",
+    image: "images/hor-003.jpg",
+    desc: "Многосоставная композиция из большого количества лиц."
+}
+];
 
-const SYNC_URL = "/api/sync"; // будущий worker
+function render() {
 
-console.log("APP START");
+    const root = document.getElementById("list");
 
-// ---------- CSV ----------
+    root.innerHTML = DATA.map(item => `
+        <div class="item">
 
-function parseCSV(text) {
+            <div class="text">
+                <div class="title">${item.title}</div>
+                <div class="meta">${item.year} · ${item.size}</div>
+                <div class="meta">${item.materials}</div>
+                <div class="desc">${item.desc}</div>
+            </div>
 
-    const lines = text.trim().split("\n");
-    const headers = lines[0].split(",");
+            <div class="image">
+                <img src="${item.image}">
+            </div>
 
-    return lines.slice(1).map(line => {
+        </div>
+    `).join("");
 
-        const cols = line.split(",");
-        const obj = {};
-
-        headers.forEach((h, i) => {
-            obj[h.trim()] = (cols[i] || "").replaceAll('"', '').trim();
-        });
-
-        return obj;
-    });
 }
 
-// ---------- SYNC QUEUE ----------
-
-const pendingSync = new Map();
-
-function scheduleSync(id, meta) {
-
-    pendingSync.set(id, meta);
-
-    // debounce batch sync
-    clearTimeout(window.__syncTimer);
-
-    window.__syncTimer = setTimeout(() => {
-
-        const payload = Array.from(pendingSync.entries()).map(([id, meta]) => ({
-            id,
-            meta
-        }));
-
-        pendingSync.clear();
-
-        fetch(SYNC_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-        });
-
-        console.log("SYNC SENT:", payload);
-
-    }, 800);
-}
-
-// ---------- LOAD ----------
-
-async function load() {
-
-    const res = await fetch(SHEET_URL);
-    const text = await res.text();
-
-    const data = parseCSV(text);
-
-    const table = document.getElementById("catalog");
-    table.innerHTML = "";
-
-    data.forEach(item => {
-
-        const tr = document.createElement("tr");
-
-        tr.innerHTML = `
-            <td>
-                <img src="images/${item.image}">
-            </td>
-
-            <td>
-                <div class="meta editable" contenteditable="true">${item.meta || ""}</div>
-            </td>
-        `;
-
-        const metaEl = tr.querySelector(".meta");
-
-        // restore local cache first (instant UX)
-        const saved = localStorage.getItem(item.id + "_meta");
-        if (saved) metaEl.innerText = saved;
-
-        // edit handler
-        metaEl.addEventListener("input", () => {
-
-            const value = metaEl.innerText;
-
-            // local cache
-            localStorage.setItem(item.id + "_meta", value);
-
-            // server sync
-            scheduleSync(item.id, value);
-        });
-
-        table.appendChild(tr);
-    });
-}
-
-load();
+render();
