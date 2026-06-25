@@ -1,26 +1,65 @@
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQEUsZO7APvo_amXquaTettgvbk8RQ_Yq81diOF36jJvNBIzRjTC6r_quylZ54h6YFKs7qBiUJLvtd7/pub?gid=0&single=true&output=csv";
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQEUsZO7APvo_amXquaTettgvbk8RQ_Yq81diOF36jJvNBIzRjTC6r_quylZ54h6YFKs7qBiUJLvtd7/pub?output=csv";
 
-console.log("START");
+console.log("APP START");
 
-async function test() {
+function parseCSV(text) {
 
-    try {
+    const lines = text.trim().split("\n");
 
-        const res = await fetch(SHEET_URL);
+    const headers = lines[0].split(",");
 
-        console.log("STATUS:", res.status);
-        console.log("TYPE:", res.headers.get("content-type"));
+    return lines.slice(1).map(line => {
 
-        const text = await res.text();
+        const cols = line.split(",");
 
-        console.log("RAW FIRST 500:");
-        console.log(text.slice(0, 500));
+        const obj = {};
 
-        document.body.innerHTML += "<pre>" + text.slice(0, 500) + "</pre>";
+        headers.forEach((h, i) => {
+            obj[h.trim()] = (cols[i] || "").replaceAll('"', '').trim();
+        });
 
-    } catch (e) {
-        console.error("FETCH ERROR:", e);
-    }
+        return obj;
+    });
 }
 
-test();
+async function load() {
+
+    const res = await fetch(SHEET_URL);
+    const text = await res.text();
+
+    console.log("RAW:", text.slice(0, 200));
+
+    const data = parseCSV(text);
+
+    console.log("PARSED:", data);
+
+    const table = document.getElementById("catalog");
+
+    table.innerHTML = "";
+
+    data.forEach(item => {
+
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>
+                <img src="images/${item.image}">
+            </td>
+
+            <td>
+                <img src="images/${item.detail_image}">
+            </td>
+
+            <td>
+                <div class="title">${item.title || ""}</div>
+                <div class="meta">${item.year || ""} · ${item.size || ""}</div>
+                <div class="meta">${item.materials || ""}</div>
+                <div class="desc">${item.description || ""}</div>
+            </td>
+        `;
+
+        table.appendChild(tr);
+    });
+}
+
+load();
