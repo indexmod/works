@@ -6,14 +6,18 @@ layout: none
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<title>Works</title>
+<title>Indexmod Works</title>
 </head>
 
 <body>
 
-{% for work in site.works %}
+<h1>Works</h1>
+
+{% assign sorted = site.works | sort: "order" %}
+
+{% for item in sorted %}
   <div>
-    <a href="{{ work.url }}">{{ work.title }}</a>
+    <a href="{{ item.url }}">{{ item.title }}</a>
   </div>
 {% endfor %}
 
