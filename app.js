@@ -1,32 +1,21 @@
-const API = "https://works.wiki-self.workers.dev";
-
-console.log("START");
-
 async function load() {
-
-  const res = await fetch(API);
+  const res = await fetch('/api/works');
   const data = await res.json();
 
-  const root = document.getElementById("list");
+  console.log(data);
 
-  root.innerHTML = data.map(w => `
+  document.getElementById('list').innerHTML =
+    data.map(i => `
+      <div class="item">
+        <div class="text">
+          <div>${i.title}</div>
+          <div>${i.year} · ${i.size}</div>
+          <div>${i.materials}</div>
+        </div>
 
-    <div class="item">
-
-      <div class="text">
-        <div>${w.title || ""}</div>
-        <div>${w.year || ""}</div>
-        <div>${w.size || ""}</div>
-        <div>${w.materials || ""}</div>
-        <div>${w.desc || ""}</div>
+        <img src="${i.image}">
       </div>
-
-      <img src="images/${w.image || ""}.jpg">
-
-    </div>
-
-  `).join("");
-
+    `).join('');
 }
 
 load();
