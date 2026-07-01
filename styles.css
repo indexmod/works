@@ -47,30 +47,31 @@ body {
   flex: 0 0 150px;
 
   display: block;
-
-  /* Safari-safe круг */
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
+  position: relative;
 
   overflow: hidden;
 
-  /* fallback стабильности */
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+
+  /* страховка для Safari */
   -webkit-mask-image: -webkit-radial-gradient(white, black);
   mask-image: radial-gradient(white, black);
-
-  align-self: flex-end;
 }
 
 .detail-image img {
+  position: absolute;
+  inset: 0;
+
   width: 100%;
   height: 100%;
-  display: block;
 
   object-fit: cover;
 
-  /* Safari fallback */
-  -webkit-transform: translateZ(0);
+  display: block;
+
   transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 /* ОСНОВНОЕ ИЗОБРАЖЕНИЕ */
