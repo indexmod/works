@@ -1,8 +1,9 @@
 ---
-layout: none
----
+
+## layout: none
 
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
 <meta charset="utf-8">
@@ -20,14 +21,23 @@ layout: none
 <div class="item">
 
   <div class="text">
-    <div class="title">{{ work.title }}</div>
-    <div class="meta">{{ work.year }}</div>
-    <div class="meta">{{ work.size }}</div>
-    <div class="meta">{{ work.materials }}</div>
+    <div class="text-inner">
+      <div class="title">{{ work.title }}</div>
+      <div class="meta">{{ work.year }}</div>
+      <div class="meta">{{ work.size }}</div>
+      <div class="meta">{{ work.materials }}</div>
+    </div>
   </div>
 
+{% if work.detail_image %}
+
+  <div class="detail-image">
+    <img src="images/{{ work.detail_image }}.png" alt="">
+  </div>
+  {% endif %}
+
   <div class="image">
-    <img src="images/{{ work.image }}.png">
+    <img src="images/{{ work.image }}.png" alt="">
   </div>
 
 </div>

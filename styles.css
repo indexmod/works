@@ -24,7 +24,7 @@ body {
   overflow: hidden;
 
   page-break-inside: avoid;
-  align-items: stretch; /* ключ: синхронизация высоты колонок */
+  align-items: stretch;
 }
 
 /* ТЕКСТ */
@@ -33,7 +33,6 @@ body {
   position: relative;
 }
 
-/* текст фиксируется к нижней линии строки */
 .text-inner {
   position: absolute;
   bottom: 2mm;
@@ -41,20 +40,37 @@ body {
   right: 0;
 }
 
-/* ФОТО */
+/* КРУПНЫЙ ФРАГМЕНТ */
+.detail-image {
+  width: 150px;
+  height: 150px;
+  flex-shrink: 0;
+
+  align-self: flex-end;
+  overflow: hidden;
+}
+
+.detail-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+/* ОСНОВНОЕ ИЗОБРАЖЕНИЕ */
 .image {
-  width: 70%;
+  flex: 1;
   position: relative;
   overflow: hidden;
 }
 
-/* изображение фиксируется по нижнему краю */
 .image img {
   position: absolute;
   bottom: 0;
   left: 0;
 
-  height: 85mm; /* строго как строка */
+  height: 85mm;
   width: auto;
 
   display: block;
