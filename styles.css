@@ -24,38 +24,53 @@ body {
   overflow: hidden;
 
   page-break-inside: avoid;
-  align-items: stretch;
+  -webkit-column-break-inside: avoid;
+
+  align-items: flex-end; /* стабильнее в Safari чем stretch */
 }
 
 /* ТЕКСТ */
 .text {
   width: 30%;
-  position: relative;
+  display: flex;
+  align-items: flex-end;
 }
 
 .text-inner {
-  position: absolute;
-  bottom: 2mm;
-  left: 0;
-  right: 0;
+  padding-bottom: 2mm;
 }
 
-/* КРУПНЫЙ ФРАГМЕНТ */
+/* КРУГ */
 .detail-image {
   width: 150px;
   height: 150px;
-  flex-shrink: 0;
+  flex: 0 0 150px;
+
+  display: block;
+
+  /* Safari-safe круг */
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+
+  overflow: hidden;
+
+  /* fallback стабильности */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
 
   align-self: flex-end;
-  overflow: hidden;
 }
 
 .detail-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
   display: block;
+
+  object-fit: cover;
+
+  /* Safari fallback */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 /* ОСНОВНОЕ ИЗОБРАЖЕНИЕ */
@@ -63,6 +78,8 @@ body {
   flex: 1;
   position: relative;
   overflow: hidden;
+
+  height: 85mm;
 }
 
 .image img {
@@ -74,7 +91,6 @@ body {
   width: auto;
 
   display: block;
-  object-fit: contain;
 }
 
 /* заголовок */
