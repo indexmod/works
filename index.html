@@ -5,77 +5,71 @@ layout: none
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<title>Works</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='black'/%3E%3Ccircle cx='11' cy='13' r='2' fill='white'/%3E%3Ccircle cx='21' cy='13' r='2' fill='white'/%3E%3Crect x='12' y='20' width='8' height='2' rx='1' fill='white'/%3E%3C/svg%3E">
+  <title>Works</title>
+  <meta name="description" content="Works Collection">
+  <meta name="theme-color" content="#ffffff">
 
-{% assign works_count = site.works.size %}
-{% assign random_index = site.time | date: "%S" | modulo: works_count %}
-{% assign preview = site.works[random_index] %}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Works">
+  <meta property="og:description" content="Works Collection">
+  <meta property="og:url" content="https://works.indexmod.press/">
+  <meta property="og:image" content="https://works.indexmod.press/images/fas-001.png">
 
-<meta charset="utf-8">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Works">
+  <meta name="twitter:description" content="Works Collection">
+  <meta name="twitter:image" content="https://works.indexmod.press/images/fas-001.png">
 
-<title>Works</title>
-
-<meta name="description" content="Works Collection">
-
-<meta property="og:type" content="website">
-<meta property="og:title" content="Works">
-<meta property="og:description" content="Works Collection">
-<meta property="og:url" content="https://works.indexmod.press/">
-<meta property="og:image" content="https://works.indexmod.press/images/fas-001.png">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Works">
-<meta name="twitter:description" content="Works Collection">
-<meta name="twitter:image" content="https://works.indexmod.press/images/fas-001.png">
-
-<link rel="stylesheet" href="styles.css">
-
-
-
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='black'/%3E%3Ccircle cx='11' cy='13' r='2' fill='white'/%3E%3Ccircle cx='21' cy='13' r='2' fill='white'/%3E%3Crect x='12' y='20' width='8' height='2' rx='1' fill='white'/%3E%3C/svg%3E">
 </head>
 
 <body>
+  <header class="site-header">
+    <div class="site-title">Works</div>
+    <div class="site-count">{{ site.works | size }}</div>
+  </header>
 
-<div class="list">
+  <main class="list">
+    {% for work in site.works %}
+      <article class="item{% if work.detail_image %} has-detail{% endif %}">
+        <div class="text">
+          <div class="text-inner">
+            <h2 class="title">{{ work.title }}</h2>
+            {% if work.year %}<div class="meta">{{ work.year }}</div>{% endif %}
+            {% if work.size %}<div class="meta">{{ work.size }}</div>{% endif %}
+            {% if work.materials %}<div class="meta">{{ work.materials }}</div>{% endif %}
+          </div>
+        </div>
 
-{% for work in site.works %}
+        {% if work.detail_image %}
+          <figure class="detail-image">
+            <img
+              src="images/{{ work.detail_image }}.png?v={{ site.time | date: '%s' }}"
+              alt="Деталь работы «{{ work.title }}»"
+              loading="lazy"
+              decoding="async">
+          </figure>
+        {% endif %}
 
-<div class="item">
+        <figure class="image">
+          <img
+            src="images/{{ work.image }}.png?v={{ site.time | date: '%s' }}"
+            alt="{{ work.title }}{% if work.year %}, {{ work.year }}{% endif %}"
+            {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+            decoding="async">
+        </figure>
+      </article>
+    {% endfor %}
+  </main>
 
-  <div class="text">
-    <div class="text-inner">
-      <div class="title">{{ work.title }}</div>
-      <div class="meta">{{ work.year }}</div>
-      <div class="meta">{{ work.size }}</div>
-      <div class="meta">{{ work.materials }}</div>
+  <footer class="footer">
+    <div class="qr">
+      <img src="images/qr.png?v={{ site.time | date: '%s' }}" alt="QR-код сайта Works" loading="lazy" decoding="async">
     </div>
-  </div>
-
-  {% if work.detail_image %}
-  <div class="detail-image">
-    <img src="images/{{ work.detail_image }}.png?v={{ site.time | date: '%s' }}" alt="">
-  </div>
-  {% endif %}
-
-  <div class="image">
-    <img src="images/{{ work.image }}.png?v={{ site.time | date: '%s' }}" alt="">
-  </div>
-
-</div>
-
-{% endfor %}
-
-</div>
-
-<div class="footer">
-  <div class="qr">
-    <img src="images/qr.png?v={{ site.time | date: '%s' }}" alt="QR Code">
-  </div>
-</div>
-
+  </footer>
 </body>
 </html>
