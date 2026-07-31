@@ -1,124 +1,312 @@
-body {
-  margin: 0;
-  padding: 18mm;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #000;
-  background: #fff;
+:root {
+  --page-padding: clamp(24px, 4.5vw, 72px);
+  --section-gap: clamp(72px, 10vw, 160px);
+  --column-gap: clamp(28px, 5vw, 84px);
+  --line: #d9d9d9;
+  --muted: #565656;
 }
 
-/* список */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #fff;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: var(--page-padding);
+  font-family: Arial, Helvetica, sans-serif;
+  color: #000;
+  background: #fff;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+figure,
+h2 {
+  margin: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.site-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: clamp(22px, 3vw, 48px);
+  margin-bottom: var(--section-gap);
+  border-bottom: 1px solid #000;
+}
+
+.site-title,
+.site-count {
+  font-size: clamp(30px, 4vw, 64px);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+}
+
+.site-count {
+  font-variant-numeric: tabular-nums;
+}
+
 .list {
   display: flex;
   flex-direction: column;
-  gap: 30mm;
+  gap: var(--section-gap);
 }
 
-/* одна строка объекта */
 .item {
-  display: flex;
-  gap: 14mm;
-
-  height: 85mm;
-  overflow: hidden;
-
+  display: grid;
+  grid-template-columns: minmax(220px, 0.34fr) minmax(0, 1fr);
+  column-gap: var(--column-gap);
+  align-items: end;
+  min-width: 0;
+  padding-top: clamp(28px, 4vw, 64px);
+  border-top: 1px solid var(--line);
+  break-inside: avoid;
   page-break-inside: avoid;
-  -webkit-column-break-inside: avoid;
-
-  align-items: flex-end;
 }
 
-/* ТЕКСТ */
+.item:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.item.has-detail {
+  grid-template-columns: minmax(220px, 0.28fr) clamp(150px, 15vw, 230px) minmax(0, 1fr);
+}
+
 .text {
-  width: 30%;
-  display: flex;
-  align-items: flex-end;
+  min-width: 0;
+  align-self: end;
 }
 
 .text-inner {
-  padding-bottom: 2mm;
+  max-width: 520px;
 }
 
-/* КРУГ (СТАБИЛЬНЫЙ) */
+.title {
+  margin: 0 0 18px;
+  font-size: clamp(34px, 3.7vw, 62px);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  max-width: 38ch;
+  font-size: clamp(18px, 1.55vw, 25px);
+  font-weight: 400;
+  line-height: 1.28;
+  letter-spacing: -0.015em;
+  color: var(--muted);
+}
+
+.meta + .meta {
+  margin-top: 3px;
+}
+
 .detail-image {
-  width: 150px;
-  height: 150px;
-  flex: 0 0 150px;
-
-  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  align-self: end;
+  display: grid;
+  place-items: center;
   overflow: hidden;
-
+  padding: 8%;
+  border: 1px solid var(--line);
   border-radius: 50%;
-  -webkit-border-radius: 50%;
-
-  background: #f2f2f2;
+  background: #f7f7f5;
 }
 
-/* ВАЖНО: убираем ребра через лёгкий зум */
 .detail-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-
-  display: block;
-
-  transform: scale(1.10);
-  -webkit-transform: scale(1.10);
-
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  object-fit: contain;
+  object-position: center;
+  filter: brightness(1.08) saturate(1.08) contrast(1.03);
 }
 
-/* ОСНОВНОЕ ИЗОБРАЖЕНИЕ */
 .image {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-
-  height: 85mm;
+  width: 100%;
+  min-width: 0;
+  height: clamp(480px, 74vh, 980px);
+  display: grid;
+  place-items: center;
+  overflow: visible;
 }
 
 .image img {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-
-  height: 85mm;
-  width: auto;
-
-  display: block;
-}
-
-/* заголовок */
-.title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  letter-spacing: 0.2px;
-}
-
-/* метаданные */
-.meta {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.35;
-  opacity: 0.9;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: brightness(1.08) saturate(1.08) contrast(1.03);
 }
 
 .footer {
-  margin-top: 30mm;
   display: flex;
   justify-content: flex-end;
+  margin-top: var(--section-gap);
+  padding-top: clamp(28px, 4vw, 64px);
+  border-top: 1px solid #000;
 }
 
 .qr {
-  width: 35mm;
-  height: 35mm;
+  width: clamp(112px, 11vw, 170px);
+  aspect-ratio: 1;
 }
 
 .qr img {
   width: 100%;
   height: 100%;
-  display: block;
+  object-fit: contain;
+}
+
+@media (max-width: 980px) {
+  :root {
+    --section-gap: clamp(72px, 13vw, 120px);
+  }
+
+  .item,
+  .item.has-detail {
+    grid-template-columns: 1fr;
+    row-gap: 30px;
+    align-items: start;
+  }
+
+  .text,
+  .detail-image,
+  .image {
+    grid-column: 1;
+  }
+
+  .text-inner {
+    max-width: 760px;
+  }
+
+  .detail-image {
+    width: clamp(132px, 25vw, 210px);
+  }
+
+  .image {
+    height: min(72svh, 760px);
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --page-padding: 18px;
+    --section-gap: 84px;
+  }
+
+  .site-header {
+    margin-bottom: 84px;
+  }
+
+  .site-title,
+  .site-count {
+    font-size: 34px;
+  }
+
+  .title {
+    margin-bottom: 14px;
+    font-size: clamp(34px, 11vw, 50px);
+  }
+
+  .meta {
+    font-size: 19px;
+  }
+
+  .item,
+  .item.has-detail {
+    row-gap: 24px;
+    padding-top: 28px;
+  }
+
+  .image {
+    height: min(68svh, 620px);
+  }
+
+  .footer {
+    justify-content: flex-start;
+  }
+}
+
+@media print {
+  @page {
+    margin: 12mm;
+  }
+
+  :root {
+    --section-gap: 24mm;
+    --column-gap: 10mm;
+  }
+
+  body {
+    padding: 0;
+  }
+
+  .site-header {
+    margin-bottom: 24mm;
+    padding-bottom: 8mm;
+  }
+
+  .site-title,
+  .site-count {
+    font-size: 24pt;
+  }
+
+  .item,
+  .item.has-detail {
+    grid-template-columns: 30% minmax(0, 1fr);
+    column-gap: 10mm;
+    row-gap: 0;
+    align-items: end;
+    padding-top: 8mm;
+  }
+
+  .item.has-detail {
+    grid-template-columns: 26% 30mm minmax(0, 1fr);
+  }
+
+  .title {
+    margin-bottom: 4mm;
+    font-size: 20pt;
+  }
+
+  .meta {
+    font-size: 11pt;
+  }
+
+  .detail-image {
+    width: 30mm;
+  }
+
+  .image {
+    height: 85mm;
+  }
+
+  .detail-image img,
+  .image img {
+    filter: brightness(1.04) saturate(1.04) contrast(1.02);
+  }
+
+  .footer {
+    margin-top: 24mm;
+    padding-top: 8mm;
+  }
+
+  .qr {
+    width: 35mm;
+  }
 }
