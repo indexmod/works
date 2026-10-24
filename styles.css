@@ -45,8 +45,7 @@ img {
   width: 100%;
   height: 100vh;
   height: 100svh;
-  min-height: 100vh;
-  min-height: 100svh;
+  min-height: 0;
   overflow: hidden;
   color: #fff;
   background: var(--paper);
@@ -136,29 +135,26 @@ img {
 
 .list {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  row-gap: var(--section-gap);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(52px, 7vw, 112px) var(--gap);
 }
 
 .item {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, .72fr);
-  grid-template-areas: "text image";
-  align-items: end;
-  gap: clamp(28px, 6vw, 96px);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 22px;
   min-width: 0;
-  min-height: clamp(480px, 48vw, 720px);
+  min-height: 0;
 }
 
 .item-reversed {
-  grid-template-columns: minmax(280px, .72fr) minmax(0, 1fr);
-  grid-template-areas: "image text";
+  flex-direction: column-reverse;
 }
 
 .text {
-  grid-area: text;
   min-width: 0;
-  align-self: end;
+  order: 1;
 }
 
 .text-inner {
@@ -187,21 +183,20 @@ img {
 }
 
 .image {
-  grid-area: image;
   position: relative;
   width: 100%;
-  height: clamp(480px, 48vw, 720px);
+  height: clamp(300px, 38vw, 600px);
   min-width: 0;
   overflow: hidden;
+  background: transparent;
 }
 
 .image img {
-  position: absolute;
-  inset: 0;
+  position: relative;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  object-position: center bottom;
+  object-position: center;
 }
 
 .footer {
@@ -222,14 +217,14 @@ img {
   object-fit: contain;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 760px) {
   :root {
     --gutter: 18px;
     --section-gap: 64px;
   }
 
   .hero {
-    min-height: 460px;
+    min-height: 0;
   }
 
   .hero-image {
@@ -257,25 +252,16 @@ img {
 
   .list {
     grid-template-columns: minmax(0, 1fr);
-    row-gap: var(--section-gap);
+    row-gap: 64px;
+  }
+
+  .image {
+    height: min(105vw, 620px);
   }
 
   .item,
   .item-reversed {
-    display: flex;
     flex-direction: column;
-    align-items: stretch;
-    gap: 18px;
-    min-height: 0;
-  }
-
-  .image {
-    order: 0;
-    height: min(112vw, 620px);
-  }
-
-  .text {
-    order: 1;
   }
 
   .text-inner {
@@ -314,12 +300,6 @@ img {
 
   .list {
     grid-template-columns: 1fr;
-  }
-
-  .item,
-  .item-reversed {
-    grid-template-columns: 1fr;
-    min-height: 85mm;
   }
 
   .image {
