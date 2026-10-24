@@ -43,11 +43,13 @@ img {
   position: relative;
   display: grid;
   width: 100%;
+  height: 100vh;
   height: 100svh;
-  min-height: 500px;
+  min-height: 100vh;
+  min-height: 100svh;
   overflow: hidden;
   color: #fff;
-  background: #50453d;
+  background: var(--paper);
   isolation: isolate;
 }
 
@@ -57,7 +59,7 @@ img {
   inset: 0;
   background: linear-gradient(180deg, rgb(0 0 0 / 12%), rgb(0 0 0 / 45%));
   content: "";
-  opacity: calc(.75 + var(--hero-progress) * .25);
+  opacity: calc(1 - var(--hero-progress));
 }
 
 .hero-image {
@@ -134,23 +136,22 @@ img {
 
 .list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: var(--gap);
+  grid-template-columns: minmax(0, 1fr);
   row-gap: var(--section-gap);
 }
 
 .item {
   display: grid;
-  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, .72fr);
   grid-template-areas: "text image";
   align-items: end;
-  gap: clamp(14px, 2vw, 30px);
+  gap: clamp(28px, 6vw, 96px);
   min-width: 0;
-  min-height: clamp(320px, 36vw, 560px);
+  min-height: clamp(480px, 48vw, 720px);
 }
 
 .item-reversed {
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+  grid-template-columns: minmax(280px, .72fr) minmax(0, 1fr);
   grid-template-areas: "image text";
 }
 
@@ -165,8 +166,8 @@ img {
 }
 
 .title {
-  margin: 0 0 14px;
-  font-size: clamp(24px, 2.5vw, 38px);
+  margin: 0 0 20px;
+  font-size: clamp(32px, 4vw, 58px);
   font-weight: 700;
   line-height: 1;
   letter-spacing: -.045em;
@@ -174,8 +175,8 @@ img {
 }
 
 .meta {
-  max-width: 38ch;
-  font-size: clamp(16px, 1.45vw, 22px);
+  max-width: 32ch;
+  font-size: clamp(18px, 1.8vw, 26px);
   font-weight: 600;
   line-height: 1.32;
   letter-spacing: -.02em;
@@ -189,7 +190,7 @@ img {
   grid-area: image;
   position: relative;
   width: 100%;
-  height: clamp(320px, 36vw, 560px);
+  height: clamp(480px, 48vw, 720px);
   min-width: 0;
   overflow: hidden;
 }
@@ -270,7 +271,7 @@ img {
 
   .image {
     order: 0;
-    height: min(112vw, 580px);
+    height: min(112vw, 620px);
   }
 
   .text {
@@ -313,5 +314,15 @@ img {
 
   .list {
     grid-template-columns: 1fr;
+  }
+
+  .item,
+  .item-reversed {
+    grid-template-columns: 1fr;
+    min-height: 85mm;
+  }
+
+  .image {
+    height: 85mm;
   }
 }
