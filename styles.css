@@ -148,13 +148,8 @@ img {
   min-height: 0;
 }
 
-.item-reversed {
-  flex-direction: column-reverse;
-}
-
 .text {
   min-width: 0;
-  order: 1;
 }
 
 .text-inner {
@@ -185,7 +180,7 @@ img {
 .image {
   position: relative;
   width: 100%;
-  height: clamp(300px, 38vw, 600px);
+  height: clamp(280px, 36vw, 520px);
   min-width: 0;
   overflow: hidden;
   background: transparent;
@@ -257,11 +252,6 @@ img {
 
   .image {
     height: min(105vw, 620px);
-  }
-
-  .item,
-  .item-reversed {
-    flex-direction: column;
   }
 
   .text-inner {
