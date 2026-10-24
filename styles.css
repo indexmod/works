@@ -1,7 +1,7 @@
 :root {
   color-scheme: light;
   --gutter: clamp(20px, 4.5vw, 72px);
-  --gap: clamp(20px, 3vw, 48px);
+  --gap: clamp(24px, 3.5vw, 56px);
   --section-gap: clamp(64px, 8vw, 120px);
   --ink: #171714;
   --paper: #f8f7f3;
@@ -136,7 +136,7 @@ img {
 .list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(52px, 7vw, 112px) var(--gap);
+  gap: clamp(44px, 5.5vw, 84px) var(--gap);
 }
 
 .item {
@@ -146,6 +146,10 @@ img {
   gap: 22px;
   min-width: 0;
   min-height: 0;
+}
+
+.item--wide {
+  grid-column: 1 / -1;
 }
 
 .text {
@@ -180,16 +184,14 @@ img {
 .image {
   position: relative;
   width: 100%;
-  height: clamp(280px, 36vw, 520px);
   min-width: 0;
-  overflow: hidden;
   background: transparent;
 }
 
 .image img {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: contain;
   object-position: center;
 }
@@ -250,8 +252,8 @@ img {
     row-gap: 64px;
   }
 
-  .image {
-    height: min(105vw, 620px);
+  .item--wide {
+    grid-column: auto;
   }
 
   .text-inner {

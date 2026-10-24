@@ -43,8 +43,9 @@ layout: none
 
   <main class="collection" id="collection" aria-labelledby="collection-heading">
     <div class="list">
-      {% for work in site.works %}
-        <article class="item">
+      {% assign ordered_works = site.works | sort: "position" %}
+      {% for work in ordered_works %}
+        <article class="item{% if work.layout == 'landscape' %} item--wide{% endif %}">
           <div class="text">
             <div class="text-inner">
               <h2 class="title">{{ work.title }}</h2>
