@@ -28,7 +28,7 @@ layout: none
 
 <body>
   <section class="hero" aria-label="Works">
-    <div class="hero-image" role="img" aria-label="Интерьер мастерской художника"></div>
+    <img class="hero-image" src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=2400&q=90" alt="Художник за работой в мастерской">
     <div class="hero-caption">
       <span>WORKS</span>
       <span>Коллекция работ</span>
@@ -36,15 +36,15 @@ layout: none
     <a class="scroll-cue" href="#collection" aria-label="Перейти к коллекции">↓</a>
   </section>
 
-  <header class="site-header">
+  <header class="site-header" id="collection-heading">
     <div class="site-title">Works</div>
     <div class="site-count">{{ site.works | size }}</div>
   </header>
 
-  <main class="collection" id="collection">
+  <main class="collection" id="collection" aria-labelledby="collection-heading">
     <div class="list">
       {% for work in site.works %}
-        <article class="item">
+        <article class="item{% if forloop.even %} item-reversed{% endif %}">
           <div class="text">
             <div class="text-inner">
               <h2 class="title">{{ work.title }}</h2>
@@ -53,16 +53,6 @@ layout: none
               {% if work.materials %}<div class="meta">{{ work.materials }}</div>{% endif %}
             </div>
           </div>
-
-          {% if work.detail_image %}
-            <figure class="detail-image" aria-hidden="true">
-              <img
-                src="images/{{ work.detail_image }}.png?v={{ site.time | date: '%s' }}"
-                alt=""
-                loading="lazy"
-                decoding="async">
-            </figure>
-          {% endif %}
 
           <figure class="image">
             <img
