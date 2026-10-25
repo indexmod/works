@@ -93,7 +93,8 @@ img {
   font-size: clamp(64px, 12vw, 180px);
   font-weight: 700;
   line-height: .78;
-  letter-spacing: -.08em;
+  color: #000;
+  letter-spacing: .02em;
 }
 
 .hero-caption span:last-child {
