@@ -96,6 +96,11 @@ img {
   letter-spacing: -.08em;
 }
 
+.hero-caption span:last-child {
+  color: #000;
+  letter-spacing: .04em;
+}
+
 .scroll-cue {
   position: absolute;
   z-index: 2;
