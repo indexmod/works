@@ -4,7 +4,9 @@
   --gap: clamp(24px, 3.5vw, 56px);
   --section-gap: clamp(64px, 8vw, 120px);
   --ink: #171714;
-  --paper: #f8f7f3;
+  --paper: #e8e8e5;
+  --card: #f2eadb;
+  --card-padding: clamp(22px, 2.8vw, 40px);
 }
 
 * {
@@ -142,16 +144,19 @@ img {
 .list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(44px, 5.5vw, 84px) var(--gap);
+  gap: clamp(32px, 4vw, 64px) var(--gap);
 }
 
 .item {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 22px;
+  gap: clamp(20px, 2.5vw, 32px);
   min-width: 0;
   min-height: 0;
+  padding: var(--card-padding);
+  border-radius: 8px;
+  background: var(--card);
 }
 
 .item--wide {
@@ -191,7 +196,7 @@ img {
   position: relative;
   width: 100%;
   min-width: 0;
-  background: transparent;
+  background: var(--card);
 }
 
 .image img {
@@ -224,6 +229,7 @@ img {
   :root {
     --gutter: 18px;
     --section-gap: 64px;
+    --card-padding: 20px;
   }
 
   .hero {
