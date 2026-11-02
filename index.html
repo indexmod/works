@@ -67,8 +67,16 @@ layout: none
     </div>
 
     <footer class="footer">
-      <div class="qr">
-        <img src="images/qr.png?v={{ site.time | date: '%s' }}" alt="QR-код сайта Works" loading="lazy" decoding="async">
+      <div class="footer-item">
+        <div class="qr">
+          <img src="images/qr.png?v={{ site.time | date: '%s' }}" alt="QR-код сайта Works" loading="lazy" decoding="async">
+        </div>
+      </div>
+      <div class="footer-item">
+        <a class="qr" href="https://buymeacoffee.com/indexmod" target="_blank" rel="noopener noreferrer">
+          <img src="images/buymeacoffee-qr.png?v={{ site.time | date: '%s' }}" alt="QR-код Buy Me a Coffee" loading="lazy" decoding="async">
+        </a>
+        <a class="footer-link" href="https://buymeacoffee.com/indexmod" target="_blank" rel="noopener noreferrer">Buy Me a Coffee</a>
       </div>
     </footer>
   </main>

@@ -209,14 +209,31 @@ img {
 
 .footer {
   display: flex;
+  align-items: flex-start;
   justify-content: flex-end;
+  gap: var(--gap);
   margin-top: var(--section-gap);
   padding-bottom: var(--gutter);
+}
+
+.footer-item {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .qr {
   width: clamp(96px, 10vw, 144px);
   aspect-ratio: 1;
+}
+
+.footer-link {
+  color: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .qr img {
