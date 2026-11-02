@@ -46,6 +46,14 @@ layout: none
       {% assign ordered_works = site.works | sort: "position" %}
       {% for work in ordered_works %}
         <article class="item{% if work.layout == 'landscape' %} item--wide{% endif %}">
+          <figure class="image">
+            <img
+              src="images/{{ work.image }}.webp?v={{ site.time | date: '%s' }}"
+              alt="{{ work.title }}{% if work.year %}, {{ work.year }}{% endif %}"
+              {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+              decoding="async">
+          </figure>
+
           <div class="text">
             <div class="text-inner">
               <h2 class="title">{{ work.title }}</h2>
@@ -54,14 +62,6 @@ layout: none
               {% if work.materials %}<div class="meta">{{ work.materials }}</div>{% endif %}
             </div>
           </div>
-
-          <figure class="image">
-            <img
-              src="images/{{ work.image }}.webp?v={{ site.time | date: '%s' }}"
-              alt="{{ work.title }}{% if work.year %}, {{ work.year }}{% endif %}"
-              {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
-              decoding="async">
-          </figure>
         </article>
       {% endfor %}
     </div>
